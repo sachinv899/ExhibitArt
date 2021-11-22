@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<style>
+     .line{
+width: 70%;
+height: 47px;
+border-bottom: 1px solid black;
+position: absolute;
+}
+</style>
+
+<script>
+    function goback(){
+        window.history.back();
+    }
+</script>
+
+<body style="margin:20px">
+ <div class="login">
+
+     <!-- start -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <a class="navbar-brand" href="#" style="color:white">EXHIBIT ART</a>
+
+</nav>
+     <!-- end -->
+
+     <!-- Main Input For Receiving Query to our ML -->
+     <br>
+    <form action="{{ url_for('predict')}}" method="post">
+        <div class="form-group">
+            <div class="row">
+                <label class="col-sm-2 col-form-label">Artist Reputation</label>
+                <input class="col-sm-2 form-control" type="text" class="" value="" name="Artist_Reputation" placeholder="Artist Reputation"   required="required" /><br>
+		        <div class="col-sm-2"></div>
+                <label class="col-sm-2 col-form-label">Height</label>
+                <input class="col-sm-2 form-control" type="text" name="Height" value="" placeholder="Height"   required="required" /><br>
+            </div>
+
+             <div class="row mt-3">
+                <label class="col-sm-2 col-form-label">Width</label>
+                <input class="col-sm-2 form-control" type="text" name="Width" value="" placeholder="Width"  required="required" />
+		        <div class="col-sm-2"></div>
+                <label class="col-sm-2 col-form-label">Weight</label>
+                <input class="col-sm-2 form-control" type="text" name="Weight" value="" placeholder="Weight"  required="required" />
+            </div>
+
+             <div class="row mt-3">
+                <label class="col-sm-2 col-form-label">Price Of Sculpture</label>
+                <input class="col-sm-2 form-control" type="text" value="" name="Price_Of_Sculpture" placeholder="Price Of Sculpture"  required="required" />
+		        <div class="col-sm-2"></div>
+                <label class="col-sm-2 col-form-label">Base Shipping Price</label>
+                <input class="col-sm-2 form-control" type="text" value="" name="Base_Shipping_Price" placeholder="Base Shipping Price"   required="required" />
+            </div>
+
+            <div class="row mt-3">
+                <label class="col-sm-2 col-form-label">No of days for  deliver</label>
+                <input class="col-sm-2 form-control" type="text" value="" name="deliver" placeholder=" No of days for  deliver"  required="required" /><br>
+		        <div class="col-sm-2"></div>
+            </div>
+
+
+
+            <div class="row mt-4">
+                <label class="col-sm-1 col-form-label">Material:</label>
+                <select class="col-sm-2 form-control" name="material_a" id="cars">
+                    <option value="Material_Brass">brass</option>
+                    <option value="Material_Clay">clay</option>
+                    <option value="Material_Aluminium">alumunium</option>
+                    <option value="Material_Wood">wood</option>
+                    <option value="Material_Marble">marble</option>
+                    <option value="Material_Bronze">bronze</option>
+                    <option value="Material_Stone">stone</option>
+                </select>
+
+                <label class="col-sm-1 col-form-label text-wrap">International:</label>
+                <select class="col-sm-2 form-control" name="International" id="international">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <label class="col-sm-2 col-form-label">Express Shipment:</label>
+                <select class="col-sm-2 form-control" name="express" id="Express">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="row mt-3">
+            <label class="col-sm-1 col-form-label">Installation included:</label>
+            <select class="col-sm-2 form-control" name="installation" id="installation">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+           </select>
+        <label class="col-sm-1 col-form-label">Transport:</label>
+        <select class="col-sm-2 form-control" name="transportation" id="transportation">
+        <option value="Airways">Airways</option>
+        <option value="RoadWays">RoadWays</option>
+            <option value="Waterways">Waterways</option>
+        </select>
+
+    <label class="col-sm-2 col-form-label">Fragile:</label>
+        <select class="col-sm-2 form-control" name="fragile" id="fragile">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        </select>
+            </div>
+<div class="row mt-3">
+     <label class="col-sm-1 col-form-label">Customer Information:</label>
+        <select class="col-sm-2 form-control" name="cutomerinfo" id="cutomerinfo">
+        <option value="Yes">Wealthy</option>
+        <option value="No">Working Class</option>
+        </select>
+
+        <label class="col-sm-1 col-form-label">Remote Location:</label>
+        <select class="col-sm-2 form-control" name="remoteloc" id="remoteloc">
+        <option value="Yes">yes</option>
+        <option value="No">no =</option>
+        </select>
+<br>
+        <br>
+<!--        Area code<input type="text" name="Areacode " placeholder="Areacode"   required="required" />-->
+        <label class="col-sm-2 col-form-label">Area Code</label>
+        <select class="col-sm-2 form-control" name="areacode" id="areacode">
+        {% for item in areacode %}
+        <option value={{item}}>{{item}}</option>
+        {% endfor %}
+        </select>
+</div>
+        <button type="submit" class="btn btn-primary mt-4">Predict Cost</button>
+<div>
+    {% if predictFlag==False %}
+<center class="mt-3">
+    <div class="alert" style="background:#00A36C" role="alert">
+    <h2 style="color:white">&#36 {{ predict_cost }}</h2>
+    </div>
+</center>
+    {% endif %}
+</div>
+</div>
+    </form>
+ </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>
